@@ -4,9 +4,8 @@ module.exports = async (context, cb) => {
     const TelegramBot = require('node-telegram-bot-api');
     const axios = require('axios');
 
-    const token = "427518409:AAFeF2tg71RG_MiNRxB4eBNMms56iTGp-pM";
+    const token = "YOUR_API_KEY";
     const bot = new TelegramBot(token);
-    const tellDadJokesUrl = 'https://icanhazdadjoke.com/';
 
     const chatId = context.body.message.chat.id;
     const message = context.body.message.text;
@@ -16,9 +15,12 @@ module.exports = async (context, cb) => {
         return cb(null, out);
     }
 
-    if (message.match(/\/tellmeajoke/)) {
+    // Command /tellmeajoke queryterm
+    if (message.match(/\/tellmeajoke (.+)/)) {
+        const tellDadJokesUrl = 'https://icanhazdadjoke.com/';
+        let response;
         try {
-            const response = await axios.get(tellDadJokesUrl, { headers: { "Accept": "text/plain" } });            
+            response = await axios.get(tellDadJokesUrl, { headers: { "Accept": "text/plain" } });            
         } catch (error) {
             const out = bot.sendMessage(chatId, "Sorry son, an error has occurred!");
             return cb(null, out);
