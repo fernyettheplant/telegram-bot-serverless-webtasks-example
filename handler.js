@@ -16,7 +16,7 @@ module.exports = async (context, cb) => {
     }
 
     // Command /tellmeajoke queryterm
-    if (message.match(/\/tellmeajoke (.+)/)) {
+    if (message.match(/\/tellmeajoke/)) {
         const tellDadJokesUrl = 'https://icanhazdadjoke.com/';
         let response;
         try {
